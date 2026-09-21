@@ -1,0 +1,28 @@
+---
+import StoryScene from '../components/StoryScene.astro';
+import { personal, story } from '../content/story';
+import '../styles/global.css';
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={story.description} />
+    <meta name="theme-color" content="#f8f5ee" />
+    <meta property="og:title" content={story.title} />
+    <meta property="og:description" content={story.description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <title>{story.title}</title>
+  </head>
+  <body>
+    <header class="masthead"><span class="brand-star" aria-hidden="true">✳</span><span>Las cosas más lindas</span><span class="masthead-right">Empiezan con amor</span></header>
+    <main>
+      {story.scenes.map((scene, index) => <StoryScene scene={scene} index={index} {...personal} dedication={story.dedication} />)}
+    </main>
+    <footer><span>Este es solo el comienzo.</span><a href="#inicio">Volver a leer <span aria-hidden="true">↗</span></a></footer>
+    <script src="../scripts/reveal.ts"></script>
+  </body>
+</html>

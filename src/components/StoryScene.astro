@@ -1,0 +1,29 @@
+---
+import type { Scene } from '../content/story';
+interface Props { scene: Scene; index: number; recipient?: string; baby?: string; signature: string; dedication: string }
+const { scene, index, recipient, baby, signature, dedication } = Astro.props;
+const first = index === 0;
+const last = index === 4;
+const Heading = first ? 'h1' : 'h2';
+---
+<section id={scene.id} class:list={['scene', `scene--${index}`, { 'scene--opening': first, 'scene--final': last }]} aria-labelledby={`${scene.id}-title`}>
+  <div class="scene-inner" data-reveal>
+    <div class="scene-copy">
+      <p class="eyebrow">{scene.chapter}</p>
+      {last && recipient && <p class="recipient">{recipient},</p>}
+      <Heading id={`${scene.id}-title`}>{scene.title}{' '}<em>{scene.emphasis}</em></Heading>
+      <div class="prose">
+        {scene.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        {last && baby && <p class="baby-name">Una nueva historia junto a {baby}.</p>}
+      </div>
+      {first && <p class="opening-note">{scene.note}</p>}
+    </div>
+    <figure class="scene-art">
+      <img src={scene.image.src} alt={scene.image.alt} width={scene.image.width} height={scene.image.height} loading={first ? 'eager' : 'lazy'} decoding="async" />
+      {!first && scene.note && <figcaption>{scene.note}</figcaption>}
+    </figure>
+    {first && <a class="scroll-invitation" href="#comienzo"><span>Seguí bajando</span><span aria-hidden="true">↓</span></a>}
+    {last && <div class="dedication"><p>{dedication}</p><p class="signature">{signature}</p></div>}
+  </div>
+  {!first && !last && <span class="page-number" aria-hidden="true">0{index}</span>}
+</section>
