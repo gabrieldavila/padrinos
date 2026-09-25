@@ -14,7 +14,7 @@ const Heading = first ? 'h1' : 'h2';
       <Heading id={`${scene.id}-title`}>{scene.title}{' '}<em>{scene.emphasis}</em></Heading>
       <div class="prose">
         {scene.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-        {last && baby && <p class="baby-name">Una nueva historia junto a {baby}.</p>}
+        {last && baby && <p class="baby-name">Una nueva historia junto a <u>{baby}</u>.</p>}
       </div>
       {first && <p class="opening-note">{scene.note}</p>}
     </div>
