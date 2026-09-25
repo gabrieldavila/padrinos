@@ -1,7 +1,7 @@
 ---
-import type { Scene } from '../content/story';
-interface Props { scene: Scene; index: number; recipient?: string; baby?: string; signature: string; dedication: string }
-const { scene, index, recipient, baby, signature, dedication } = Astro.props;
+import type { Scene, StoryImage } from '../content/story';
+interface Props { scene: Scene; index: number; recipient?: string; baby?: string; signature: string; babyPhoto?: StoryImage; dedication: string }
+const { scene, index, recipient, baby, signature, babyPhoto, dedication } = Astro.props;
 const first = index === 0;
 const last = index === 4;
 const Heading = first ? 'h1' : 'h2';
@@ -24,6 +24,11 @@ const Heading = first ? 'h1' : 'h2';
     </figure>
     {first && <a class="scroll-invitation" href="#comienzo"><span>Seguí bajando</span><span aria-hidden="true">↓</span></a>}
     {last && <div class="dedication"><p>{dedication}</p><p class="signature">{signature}</p></div>}
+    {last && babyPhoto && (
+      <figure class="baby-photo">
+        <img src={babyPhoto.src} alt={babyPhoto.alt} width={babyPhoto.width} height={babyPhoto.height} loading="lazy" decoding="async" />
+      </figure>
+    )}
   </div>
   {!first && !last && <span class="page-number" aria-hidden="true">0{index}</span>}
 </section>

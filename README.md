@@ -29,11 +29,12 @@ Editar `src/content/story.ts`:
 - `personal.recipient`: nombre del destinatario; vacío se omite.
 - `personal.baby`: nombre del bebé, opcional.
 - `personal.signature`: firma de la familia.
+- `personal.babyPhoto`: fotografía opcional que aparece después de la firma final. Copiar el archivo a `public/images/baby/` y completar `src`, un `alt` descriptivo y sus dimensiones reales `width`/`height`. Para ocultarla, eliminar esta propiedad.
 - `story.dedication`: dedicatoria final.
 - `story.scenes`: textos, títulos, énfasis, notas y referencias a imágenes. Mantener el orden de las cinco escenas; la quinta contiene la revelación.
 - `story.title` y `story.description`: metadatos neutrales del enlace, sin anticipar la sorpresa.
 
-Los textos son texto plano, no HTML. Para incorporar fotos, copiarlas a `public/images/` y cambiar `image.src`, `alt`, `width` y `height` en la escena correspondiente. `src` comienza con `/images/`. Indicar las dimensiones reales para reservar espacio y evitar saltos al cargar; escribir una alternativa breve que describa lo relevante. Usar `alt: ''` únicamente para imágenes decorativas.
+Los textos son texto plano, no HTML. Para reemplazar la foto final, copiar un JPEG, WebP, AVIF o PNG a `public/images/baby/` y actualizar `personal.babyPhoto`; no hace falta modificar el componente. Para cambiar ilustraciones de una escena, editar su `image.src`, `alt`, `width` y `height`. Las rutas comienzan con `/images/`. Indicar las dimensiones reales para reservar espacio y evitar saltos al cargar; escribir una alternativa breve que describa lo relevante. Usar `alt: ''` únicamente para imágenes decorativas.
 
 Optimizar fotos a WebP o JPEG, con unos 1200px de ancho como punto de partida y preferentemente menos de 200KB. Las imágenes se muestran completas sin recorte. Revisar el encuadre, lectura y rendimiento en móvil después de cambiarlas. Las ilustraciones incluidas son recursos locales propios y pueden reemplazarse libremente.
 

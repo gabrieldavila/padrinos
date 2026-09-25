@@ -19,16 +19,16 @@ for (const [width, height] of [[320, 640], [390, 844], [768, 1024], [1440, 900],
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto('/');
     await expect(page.locator('section')).toHaveCount(5);
-    await expect(page.locator('h1')).toHaveText('Una historia para vos.');
+    await expect(page.locator('h1')).toHaveText('Tío Coco.');
     for (const scene of await page.locator('.scene-inner').all()) {
       await scene.scrollIntoViewIfNeeded();
       await expect(scene).toHaveCSS('opacity', '1');
-      await expect(scene.locator('img')).toBeVisible();
+      for (const image of await scene.locator('img').all()) await expect(image).toBeVisible();
     }
     expect(await page.locator('img').evaluateAll((images) => images.every((image) => image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0))).toBe(true);
     await verifyLayout(page);
     await page.screenshot({ path: testInfo.outputPath(`story-${width}.png`), fullPage: true });
-    await expect(page.locator('section').last().locator('h2')).toHaveText('Vas a ser padrino.');
+    await expect(page.locator('section').last().locator('h2')).toHaveText('¿Querés ser mi padrino?');
     await page.screenshot({ path: testInfo.outputPath(`final-${width}.png`) });
     await page.getByRole('link', { name: 'Volver a leer' }).click();
     await expect(page.locator('h1')).toBeInViewport();
@@ -109,6 +109,31 @@ test('imagen fallida no impide leer y mantiene alternativa', async ({ page }) =>
   await expect(page.locator('#comienzo .prose')).toContainText('Una nueva vida.');
   await page.locator('.scene--final').scrollIntoViewIfNeeded();
   await expect(page.locator('.scene--final .scene-inner')).toHaveCSS('opacity', '1');
+});
+
+test('foto del bebé accesible, posterior a la firma y apta para impresión', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/');
+  const finalScene = page.locator('.scene--final');
+  const photo = finalScene.locator('.baby-photo img');
+  await photo.scrollIntoViewIfNeeded();
+  await expect(photo).toBeVisible();
+  await expect(photo).toHaveAttribute('src', '/images/baby/bebe.jpeg');
+  await expect(photo).toHaveAttribute('alt', 'Fotografía de Vicente.');
+  await expect(photo).toHaveAttribute('width', '1200');
+  await expect(photo).toHaveAttribute('height', '1600');
+  expect(await finalScene.locator('.dedication, .baby-photo').evaluateAll((elements) => elements.map((element) => element.className))).toEqual(['dedication', 'baby-photo']);
+  const preservesRatioWithoutOverflow = () => photo.evaluate((image) => {
+    const box = image.getBoundingClientRect();
+    return Math.abs((box.width / box.height) - (1200 / 1600)) < .01 && box.right <= window.innerWidth;
+  });
+  expect(await preservesRatioWithoutOverflow()).toBe(true);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await photo.scrollIntoViewIfNeeded();
+  expect(await preservesRatioWithoutOverflow()).toBe(true);
+
+  await page.emulateMedia({ media: 'print' });
+  await expect(finalScene.locator('.baby-photo')).toHaveCSS('break-inside', 'avoid');
 });
 
 test('contraste de los colores de texto', () => {
