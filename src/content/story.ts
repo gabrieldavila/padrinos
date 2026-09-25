@@ -15,12 +15,28 @@ export interface Scene {
   note?: string;
 }
 
+export interface Personalization {
+  recipient?: string;
+  baby?: string;
+  signature: string;
+  babyPhoto?: StoryImage;
+}
+
 // Los nombres vacíos se omiten. Todos los textos se renderizan como texto seguro.
+// Para reemplazar la foto, copiá un JPEG, WebP, AVIF o PNG optimizado a
+// public/images/baby/ y actualizá src, alt, width y height con los valores reales.
+// Como referencia, usá unos 1200 px de ancho y preferentemente menos de 200 KB.
 export const personal = {
   recipient: 'Por eso tío Coco',
   baby: 'Vicente',
   signature: 'Con todo nuestro amor. — Judith y Gabriel',
-};
+  babyPhoto: {
+    src: '/images/baby/bebe.jpeg',
+    alt: 'Fotografía de Vicente.',
+    width: 1200,
+    height: 1600,
+  },
+} satisfies Personalization;
 
 export const story = {
   title: 'Tío Coco',
