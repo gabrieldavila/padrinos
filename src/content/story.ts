@@ -17,19 +17,19 @@ export interface Scene {
 
 // Los nombres vacíos se omiten. Todos los textos se renderizan como texto seguro.
 export const personal = {
-  recipient: '',
-  baby: '',
-  signature: 'Con todo nuestro amor.',
+  recipient: 'Por eso tío Coco',
+  baby: 'Vicente',
+  signature: 'Con todo nuestro amor. — Judith y Gabriel',
 };
 
 export const story = {
-  title: 'Una historia para vos',
+  title: 'Tío Coco',
   description: 'Hay historias que empiezan con algo pequeño. Esta es una de ellas.',
   dedication: 'Hay un lugar muy especial en esta historia. Y es tuyo.',
   scenes: [
     {
-      id: 'inicio', chapter: 'Un pequeño prólogo',
-      title: 'Una historia', emphasis: 'para vos.',
+      id: 'inicio', chapter: 'Queremos contarte algo muy especial',
+      title: 'Tío', emphasis: 'Coco.',
       paragraphs: ['Hay noticias que merecen', 'contarse despacito.'],
       image: { src: '/images/letter.svg', alt: 'Un sobre abierto guarda una pequeña estrella.', width: 600, height: 480 },
       note: 'Tomate un momento. Esto es para vos.',
@@ -57,7 +57,8 @@ export const story = {
     },
     {
       id: 'un-nuevo-capitulo', chapter: '04 — Nuestro próximo capítulo',
-      title: 'Vas a ser', emphasis: 'padrino.',
+      title: '¿Querés ser mi ',
+      emphasis: 'padrino?',
       paragraphs: ['Queremos que seas parte de esta aventura', 'y de la vida de nuestro bebé.'],
       image: { src: '/images/heart.svg', alt: '', width: 240, height: 180 },
     },
